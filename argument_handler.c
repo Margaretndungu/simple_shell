@@ -1,86 +1,64 @@
 #include "main.h"
 
 /**
-  * prompt_user - prompt the user to imput a command
+  * split_arguments_file2 - splits a line
+  * @line: pointer to be splitted
+  * @args: pointer to the arguments
   *
-  * Return: Nothing
+  * Return: pointer to next token or NULL if there are no more
   */
 
-void prompt_user(void)
+void split_arguments_file2(char *line, char **args)
 {
-	write(STDOUT_FILENO, ":) ", 3);
-}
+	int i = 0;
+	char *token;
 
-/**
-  * read_line - reads the user imput command
-  *
-  * Return: the number of characters read, including delimiter character
-  * -1 on failure
-  */
-
-char *read_line()
-{
-	char *line = NULL;
-	size_t bufsize = 0;
-	ssize_t read = getline(&line, &bufsize, stdin);
-
-	if (read == -1)
+	token = strtok(line, " ");
+	while (token != NULL)
 	{
-		if (line)
-			free(line);
-		write(STDOUT_FILENO. "\n", 1);
-		return (NULL);
+		args[i++] = token;
+		tokrn = strtok(NULL, " ")
 	}
-
-	line[strcspn(line, "\n")] = '\0';
-	return (line);
+	args[i] = NULL;
 }
 
 /**
-  * execute_command - execute a command using execve function
-  * @command: command to be executed
+  * execute_command_file2 - executes a command
+  * @line: pointer to the line to be executed
   *
-  * Return: Nothing
-  * -1 on failure
+  * Return: Nothing or -1 on error
   */
 
-void execute_command(char *command)
+void execute_command_file2(char *line)
 {
 	pid_t pid = fork();
+	int exec_result;
+
+	line[strcspn(line, "\n")] = '\0';
 
 	if (pid == -1)
 	{
 		perror("fork");
-		exit(EXIT_FAILURE);
+		wxit(EXIT_FAILURE);
+	}
+	else if (pid == 0)
+	{
+		char *args[64];
+
+		split_arguments_file2(line, args);
+
+		exec_result = execve(args[0], args, NULL);
+
+		if (exec_result == -1)
+		{
+			perror("execve");
+		}
+		exit(EXIT_SUCCESS);
 	}
 	else
 	{
 		int status;
 
-		waitpid(pid, &status, 0);
+		waitpid(pid, &status, 0)
 	}
-}
-
-/**
-  * main - entry point
-  *
-  * Return: Always 0 (success)
-  */
-
-int main(void)
-{
-	char *line;
-
-	while (1)
-	{
-		prompt_user();
-		line = read_line();
-
-		if (line == NULL)
-			break;
-
-		execute_command(line);
-		free(line);
-	}
-	return (0);
 }
