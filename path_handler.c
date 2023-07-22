@@ -31,7 +31,7 @@ void tokenizeInput_file3(char *line, char **args)
   * Return: string containing environment variable value
   */
 
-char *findCommand_file3(char args)
+char *findCommand_file3(char **args)
 {
 	char *path = getenv("PATH");
 	char *command_path = NULL;
