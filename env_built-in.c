@@ -11,7 +11,7 @@ char *findCommandPath_file5(char *command, char *path)
 
 	while (token != NULL)
 	{
-		char *token = strtok(path, ":");
+		char command_path[MAX_ARGS];
 
 		if (command[0] == '/')
 		{
@@ -51,7 +51,7 @@ void executeCommand_file5(char *line)
 
 	path = getenv("PATH");
 
-	command_path = findCommandPath_file5(arg[0], path);
+	command_path = findCommandPath_file5(args[0], path);
 
 	if (command_path != NULL)
 	{
@@ -71,7 +71,7 @@ void executeCommand_file5(char *line)
 	}
 	else
 	{
-		fprintf(stderr, "Command not found: %s\n", args[0];
+		fprintf(stderr, "Command not found: %s\n", args[0]);
 				}
 				}
 /**
@@ -84,6 +84,6 @@ int i;
 
 for (i = 0; environ[i] != NULL; i++)
 {
-printf("%s\n, environ[i]);
+printf("%s\n", environ[i]);
 }
 }

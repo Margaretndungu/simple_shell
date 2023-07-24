@@ -47,7 +47,8 @@ char *findCommand_file3(char **args)
 		}
 		else
 		{
-			snprintf(command, sizeof(command), "%s%s", token, args[0]);
+
+			snprintf(command, sizeof(command), "%s/%s", token, args[0]);
 		}
 
 		if (access(command, X_OK) == 0)
@@ -61,14 +62,14 @@ char *findCommand_file3(char **args)
 }
 
 /**
-  * execute_command_file3 - executes a command path
+  * executecommand_file3 - executes a command path
   * @command_path: pointer to command_path character
   * @args: pointer to character argument
   *
   * Return: Nothing or -1 on error
   */
 
-void execute_command_file3(char *command_path, char **args)
+void executecommand_file3(char *command_path, char **args)
 {
 	if (command_path != NULL)
 	{

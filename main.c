@@ -40,6 +40,7 @@ int executeExternalCommand(char *line)
 	char *command_path;
 	int status;
 	pid_t pid;
+	char *args[MAX_ARGS];
 
 		pid = fork();
 
@@ -50,8 +51,6 @@ int executeExternalCommand(char *line)
 		}
 		else if (pid == 0)
 		{
-			char *args[MAX_ARGS];
-
 			tokenizeInput_file3(line, args);
 			command_path = findCommand_file3(args);
 
@@ -65,7 +64,7 @@ int executeExternalCommand(char *line)
 			{
 				char error_message[] = "Command not found: ";
 
-				write(STDERR_FILENO, error_messge, strlen(error_message));
+				write(STDERR_FILENO, error_message, strlen(error_message));
 				write(STDERR_FILENO, args[0], strlen(args[0]));
 				write(STDERR_FILENO, "\n", 1);
 			}
@@ -85,17 +84,26 @@ int executeExternalCommand(char *line)
  */
 int executeCommand(char *line)
 {
-	int status;
-	char *command_path;
+	int status __attribute__((unused));
+	char *command_path __attribute__((unused));
 
-	if (strcmp(line, "env") == 0)
+	if(strcmp(line, "env") == 0)
 	{
 		printEnvironment_file5();
 	}
 	else
 	{
-		command_path = NULL;
+		if (strstr(line, "/bin/") != NULL)
+		{
 		status = executeExternalCommand(line);
+		}
+		else
+		{
+			char *args[MAX_ARGS];
+			tokenizeInput_file3(line, args);
+			command_path = findCommand_file3(args);
+			status = executeExternalCommand(line);
+		}
 	}
 	return (0);
 }

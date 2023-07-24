@@ -1,5 +1,4 @@
 #include "main.h"
-
 /**
   * split_arguments_file2 - splits a line
   * @line: pointer to be splitted
@@ -17,7 +16,7 @@ void split_arguments_file2(char *line, char **args)
 	while (token != NULL)
 	{
 		args[i++] = token;
-		tokrn = strtok(NULL, " ")
+		token = strtok(NULL, " ");
 	}
 	args[i] = NULL;
 }
@@ -39,7 +38,7 @@ void execute_command_file2(char *line)
 	if (pid == -1)
 	{
 		perror("fork");
-		wxit(EXIT_FAILURE);
+		exit(EXIT_FAILURE);
 	}
 	else if (pid == 0)
 	{
@@ -59,6 +58,6 @@ void execute_command_file2(char *line)
 	{
 		int status;
 
-		waitpid(pid, &status, 0)
+		waitpid(pid, &status, 0);
 	}
 }

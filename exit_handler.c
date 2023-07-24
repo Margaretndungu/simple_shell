@@ -6,7 +6,7 @@
 char *readCommand_file4(void)
 {
 	char *line = NULL;
-	ssize_t bufsize = 0;
+	size_t bufsize = 0;
 	ssize_t read;
 
 	read = getline(&line, &bufsize, stdin);
@@ -86,7 +86,7 @@ else if (pid == 0)
 	}
 	else
 	{
-		fprint(stderr, "Command not found: %s\n", args[0];
+		fprintf(stderr, "Command not found: %s\n", args[0]);
 	}
 	exit(EXIT_FAILURE);
 	}
