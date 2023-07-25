@@ -9,6 +9,7 @@
 #include <sys/wait.h>
 
 #define MAX_ARGS 64
+#define READLINE_BUFFER_SIZE 1024
 
 extern char **environ;
 
@@ -30,5 +31,6 @@ void executeCommand(char *line);
 char *findExecutablePath(char *command);
 void printCommandNotFoundError(char *command);
 int main(void);
-
+ssize_t read_chars_from_buffer(const char *buffer, ssize_t
+	buffer_length, char *line, size_t line_index);
 #endif
