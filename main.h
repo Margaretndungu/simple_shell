@@ -26,7 +26,9 @@ void executeCommand_file4(char *command);
 char *findCommandPath_file5(char *command, char *path);
 void executeCommand_file5(char *line);
 void printEnvironment_file5(void);
-int executeCommand(char *line);
-int executeExternalCommand(char *line);
+void executeCommand(char *line);
+char *findExecutablePath(char *command);
+void printCommandNotFoundError(char *command);
+int main(void);
 
 #endif

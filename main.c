@@ -24,18 +24,25 @@ int main(void)
 			free(line);
 			break;
 		}
+		if (strcmp(line, "env") == 0)
+		{
+			printEnvironment_file5();
+		}
+		else
+		{
 		executeCommand(line);
+		}
 
 		free(line);
 	}
 	return (0);
 }
 /**
- * executeExternalCommand - function that calls executable files
+ * executeCommand - function that calls executable files
  * @line:line to be executed
  * Return: 0 on success and -1 on failure
  */
-int executeExternalCommand(char *line)
+void executeCommand(char *line)
 {
 	char *command_path;
 	int status;
@@ -47,7 +54,7 @@ int executeExternalCommand(char *line)
 		if (pid == -1)
 		{
 			perror("fork");
-			return (-1);
+			return;
 		}
 		else if (pid == 0)
 		{
@@ -62,11 +69,7 @@ int executeExternalCommand(char *line)
 			}
 			else
 			{
-				char error_message[] = "Command not found: ";
-
-				write(STDERR_FILENO, error_message, strlen(error_message));
-				write(STDERR_FILENO, args[0], strlen(args[0]));
-				write(STDERR_FILENO, "\n", 1);
+				printCommandNotFoundError(args[0]);
 			}
 			free(line);
 			exit(EXIT_FAILURE);
@@ -75,35 +78,27 @@ int executeExternalCommand(char *line)
 		{
 			waitpid(pid, &status, 0);
 		}
-		return (status);
 }
 /**
- * executeCommand - function that executes all files
- * @line: line to be executed
- * Return: 0 on success
+ * findExecutablePath - function that find executable path
+ * @command: command to be found
+ * Return: Nothing
  */
-int executeCommand(char *line)
+char *findExecutablePath(char *command __attribute__((unused)))
 {
-	int status __attribute__((unused));
-	char *command_path __attribute__((unused));
 
-	if(strcmp(line, "env") == 0)
-	{
-		printEnvironment_file5();
-	}
-	else
-	{
-		if (strstr(line, "/bin/") != NULL)
-		{
-		status = executeExternalCommand(line);
-		}
-		else
-		{
-			char *args[MAX_ARGS];
-			tokenizeInput_file3(line, args);
-			command_path = findCommand_file3(args);
-			status = executeExternalCommand(line);
-		}
-	}
-	return (0);
+	return (NULL);
+}
+/**
+ * printCommandNotFoundError - function prints an error message
+ * @command:command to be executed
+ * Return:Nothing
+ */
+void printCommandNotFoundError(char *command)
+{
+	char error_message[] = "Command not found: ";
+
+	write(STDERR_FILENO, error_message, strlen(error_message));
+	write(STDERR_FILENO, command, strlen(command));
+	write(STDERR_FILENO, "\n", 1);
 }
