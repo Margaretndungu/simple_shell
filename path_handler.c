@@ -53,11 +53,7 @@ char *findCommand_file3(char **args)
 
 		if (access(command, X_OK) == 0)
 		{
-			if ((command_path = strdup(command)) == NULL)
-			{
-				perror("strdup");
-				return (NULL);
-			}
+			command_path = strdup(command);
 			break;
 		}
 		token = strtok(NULL, ":");
