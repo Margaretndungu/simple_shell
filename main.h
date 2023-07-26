@@ -23,6 +23,7 @@ char *findCommand_file3(char **args);
 void executecommand_file3(char *command_path, char **args);
 char *readCommand_file4(void);
 char *searchCommandPath_file4(char *command);
+void executeCommandChild(char *command);
 void executeCommand_file4(char *command);
 char *findCommandPath_file5(char *command, char *path);
 void executeCommand_file5(char *line);
