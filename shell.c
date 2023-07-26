@@ -8,7 +8,10 @@
 
 void prompt_user_file1(void)
 {
+	if (isatty(STDIN_FILENO))
+	{
 	write(STDOUT_FILENO, ":) ", 3);
+	}
 }
 
 /**
