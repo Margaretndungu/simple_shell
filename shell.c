@@ -76,5 +76,3 @@ void execute_command_file1(char *command)
 		waitpid(pid, &status, 0);
 	}
 }
-
-
