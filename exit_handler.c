@@ -78,6 +78,7 @@ void executeCommandChild(char *command)
 	else
 	{
 		const char *command_not_found_msg = "Command not found: ";
+
 		write(STDERR_FILENO, command_not_found_msg, strlen(command_not_found_msg));
 		write(STDERR_FILENO, args[0], strlen(args[0]));
 		write(STDERR_FILENO, "\n", 1);
@@ -108,7 +109,7 @@ else if (pid == 0)
 }
 else
 {
-	waitpid(pid, &status,0);
+	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
 	{
 		exit_status = WEXITSTATUS(status);
