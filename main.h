@@ -10,6 +10,7 @@
 
 #define MAX_ARGS 64
 #define READLINE_BUFFER_SIZE 1024
+#define BUFFER_SIZE 102
 
 extern char **environ;
 
@@ -34,4 +35,6 @@ void printCommandNotFoundError(char *command);
 int main(void);
 ssize_t read_chars_from_buffer(const char *buffer, ssize_t
 	buffer_length, char *line, size_t line_index);
+char *my_getline(void);
+
 #endif

@@ -12,7 +12,7 @@ int main(void)
 		prompt_user_file1();
 		fflush(stdout);
 
-		line = readCommand_file4();
+		line = my_getline();
 
 		if (line == NULL)
 		{
