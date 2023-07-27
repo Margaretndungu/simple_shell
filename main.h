@@ -10,7 +10,7 @@
 
 #define MAX_ARGS 64
 #define READLINE_BUFFER_SIZE 1024
-#define BUFFER_SIZE 102
+#define BUFFER_SIZE 1024
 
 extern char **environ;
 
