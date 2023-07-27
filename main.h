@@ -29,7 +29,7 @@ char *findCommandPath_file5(char *command, char *path);
 void executeCommand_file5(char *line);
 void printEnvironment_file5(void);
 void executeCommand(char *line);
-char *findExecutablePath(char *command);
+char *findExecutablePath(char *command __attribute__((unused)));
 void printCommandNotFoundError(char *command);
 int main(void);
 ssize_t read_chars_from_buffer(const char *buffer, ssize_t

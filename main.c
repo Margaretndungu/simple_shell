@@ -7,17 +7,17 @@ int main(void)
 {
 	char *line;
 
-	while (1)
-	{
-		prompt_user_file1();
-		fflush(stdout);
-
-		line = readCommand_file4();
-
-		if (line == NULL)
+		while (1)
 		{
-			break;
-		}
+			prompt_user_file1();
+			fflush(stdout);
+
+			line = read_line_file1();
+
+			if (line == NULL)
+			{
+				break;
+			}
 
 		if (strcmp(line, "exit") == 0)
 		{
@@ -30,13 +30,14 @@ int main(void)
 		}
 		else
 		{
-		executeCommand(line);
+			executeCommand(line);
 		}
 
 		free(line);
 	}
 	return (0);
 }
+
 /**
  * executeCommand - function that calls executable files
  * @line:line to be executed

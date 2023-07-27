@@ -1,16 +1,14 @@
 #include "main.h"
-
 /**
   * prompt_user_file1 - prompts a user
   *
   * Return: 0 on success
   */
-
 int prompt_user_file1(void)
 {
 	if (isatty(STDIN_FILENO))
 	{
-	write(STDOUT_FILENO, "$ ", 3);
+	write(STDOUT_FILENO, "$ ", 2);
 	return (1);
 	}
 	return (0);
@@ -34,10 +32,9 @@ char *read_line_file1(void)
 		if (line)
 			free(line);
 		if (bufsize == 0)
-		write(STDOUT_FILENO, "\n", 1);
+			write(STDOUT_FILENO, "\n", 1);
 		return (NULL);
 	}
-
 	line[strcspn(line, "\n")] = '\0';
 	return (line);
 }
