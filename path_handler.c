@@ -74,13 +74,30 @@ void executecommand_file3(char *command_path, char **args)
 {
 	if (command_path != NULL)
 	{
+		pid_t pid = fork();
+
+		if (pid < 0)
+		{
+			perror("fork");
+			exit(EXIT_FAILURE);
+		}
+		else if (pid == 0)
+		{
 		execve(command_path, args, NULL);
 		perror("execve");
-		free(command_path);
+		exit(EXIT_FAILURE);
 	}
 	else
 	{
+		int status;
+
+		waitpid(pid, &status, 0);
+	}
+	free(command_path);
+	}
+	else
+	{
+
 		fprintf(stderr, "Command not found: %s\n", args[0]);
 	}
-	exit(EXIT_FAILURE);
 }
