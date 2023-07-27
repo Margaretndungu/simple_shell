@@ -67,12 +67,13 @@ void executeCommand(char *line)
 			{
 				execve(command_path, args, NULL);
 				perror("execve");
-				free(command_path);
 			}
 			else
 			{
 				printCommandNotFoundError(args[0]);
 			}
+			free(command_path);
+
 			for (i = 0; args[i] != NULL; i++)
 			{
 				free(args[i]);
