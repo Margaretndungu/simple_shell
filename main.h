@@ -13,7 +13,7 @@
 
 extern char **environ;
 
-void prompt_user_file1(void);
+int prompt_user_file1(void);
 char *read_line_file1(void);
 void execute_command_file1(char *command);
 void split_arguments_file2(char *line, char **args);
