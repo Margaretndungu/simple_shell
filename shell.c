@@ -31,8 +31,6 @@ char *read_line_file1(void)
 	{
 		if (line)
 			free(line);
-		if (bufsize == 0)
-			write(STDOUT_FILENO, "\n", 1);
 		return (NULL);
 	}
 	line[strcspn(line, "\n")] = '\0';
@@ -59,16 +57,12 @@ void execute_command_file1(char *command)
 	}
 	else if (pid == 0)
 	{
-		char *args[2];
-
-		args[0] = command;
-		args[1] = NULL;
-
-		exec_result = execve(command, args, NULL);
+		exec_result = execve(command, &command, NULL);
 
 		if (exec_result == -1)
 		{
-			perror("execve");
+			fprintf(stderr, "Error executing %s: %s\n", command, strerror(errno));
+			exit(EXIT_FAILURE);
 		}
 		exit(EXIT_SUCCESS);
 	}
