@@ -12,11 +12,11 @@ void split_arguments_file2(char *line, char **args)
 	int i = 0;
 	char *token;
 
-	token = strtok(line, " ");
+	token = custom_strtok(line, " ");
 	while (token != NULL)
 	{
 		args[i++] = token;
-		token = strtok(NULL, " ");
+		token = custom_strtok(NULL, " ");
 	}
 	args[i] = NULL;
 }

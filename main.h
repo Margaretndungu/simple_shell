@@ -36,5 +36,7 @@ int main(void);
 ssize_t read_chars_from_buffer(const char *buffer, ssize_t
 	buffer_length, char *line, size_t line_index);
 char *my_getline(void);
+char *_strchr(const char *str, int c);
+char *custom_strtok(char *str, const char *del);
 
 #endif

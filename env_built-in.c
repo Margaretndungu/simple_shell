@@ -7,7 +7,7 @@
  */
 char *findCommandPath_file5(char *command, char *path)
 {
-	char *token = strtok(path, ":");
+	char *token = custom_strtok(path, ":");
 
 	while (token != NULL)
 	{
@@ -25,7 +25,7 @@ char *findCommandPath_file5(char *command, char *path)
 		{
 		return (strdup(command_path));
 		}
-		token = strtok(NULL, ":");
+		token = custom_strtok(NULL, ":");
 	}
 	return (NULL);
 }
@@ -40,12 +40,12 @@ void executeCommand_file5(char *line)
 	int i = 0;
 	char *path;
 	char *command_path;
-	char *token = strtok(line, " ");
+	char *token = custom_strtok(line, " ");
 
 	while (token != NULL)
 	{
 		args[i++] = token;
-		token = strtok(NULL, " ");
+		token = custom_strtok(NULL, " ");
 	}
 	args[i] = NULL;
 

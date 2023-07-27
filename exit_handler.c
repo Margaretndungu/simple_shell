@@ -31,7 +31,7 @@ char *readCommand_file4(void)
 char *searchCommandPath_file4(char *command)
 {
 	char *path = getenv("PATH");
-	char *token = strtok(path, ":");
+	char *token = custom_strtok(path, ":");
 
 	while (token != NULL)
 	{
@@ -44,7 +44,7 @@ char *searchCommandPath_file4(char *command)
 		{
 		return (strdup(command_with_path));
 		}
-		token = strtok(NULL, ":");
+		token = custom_strtok(NULL, ":");
 		}
 		return (NULL);
 }
@@ -57,13 +57,13 @@ void executeCommandChild(char *command)
 {
 	char *args[MAX_ARGS];
 	int i = 0;
-	char *token = strtok(command, " ");
+	char *token = custom_strtok(command, " ");
 	char *command_path;
 
 	while (token != NULL)
 	{
 		args[i++] = token;
-		token = strtok(NULL, " ");
+		token = custom_strtok(NULL, " ");
 	}
 	args[i] = NULL;
 	command_path = searchCommandPath_file4(args[0]);

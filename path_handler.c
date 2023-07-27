@@ -14,12 +14,12 @@ void tokenizeInput_file3(char *line, char **args)
 	int i = 0;
 	char *token;
 
-	token = strtok(line, " ");
+	token = custom_strtok(line, " ");
 
 	while (token != NULL)
 	{
 		args[i++] = token;
-		token = strtok(NULL, " ");
+		token = custom_strtok(NULL, " ");
 	}
 	args[i] = NULL;
 }
@@ -35,7 +35,7 @@ char *findCommand_file3(char **args)
 {
 	char *path = getenv("PATH");
 	char *command_path = NULL;
-	char *token = strtok(path, ":");
+	char *token = custom_strtok(path, ":");
 
 	while (token != NULL)
 	{
@@ -56,7 +56,7 @@ char *findCommand_file3(char **args)
 			command_path = strdup(command);
 			break;
 		}
-		token = strtok(NULL, ":");
+		token = custom_strtok(NULL, ":");
 	}
 	return (command_path);
 }
