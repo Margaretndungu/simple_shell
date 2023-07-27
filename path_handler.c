@@ -53,7 +53,6 @@ char *findCommand_file3(char **args)
 
 		if (access(command, X_OK) == 0)
 		{
-			free(command_path);
 
 			command_path = strdup(command);
 			break;
