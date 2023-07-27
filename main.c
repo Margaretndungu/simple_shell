@@ -49,6 +49,7 @@ void executeCommand(char *line)
 	int status;
 	pid_t pid;
 	char *args[MAX_ARGS];
+	int i;
 
 		pid = fork();
 
@@ -71,6 +72,10 @@ void executeCommand(char *line)
 			else
 			{
 				printCommandNotFoundError(args[0]);
+			}
+			for (i = 0; args[i] != NULL; i++)
+			{
+				free(args[i]);
 			}
 			free(line);
 			exit(EXIT_FAILURE);
