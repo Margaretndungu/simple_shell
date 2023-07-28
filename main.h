@@ -45,4 +45,6 @@ void update_pwd_environment_variable(const char *new_dir, const char *previous_d
 void change_directory(char *command);
 void handle_cd(char *command);
 void handle_pwd(void);
+void handle_env(void);
+
 #endif

@@ -6,7 +6,6 @@
 int main(void)
 {
 	char *line;
-	int i = 0;
 
 		while (1)
 		{
@@ -35,14 +34,7 @@ int main(void)
 		}
 		else if (strcmp(line, "env") == 0)
 		{
-			while (environ[i] != NULL)
-			{
-				
-			printf("%s\n", environ[i]);
-			i++;
-			}
-
-			printEnvironment_file5();
+			handle_env();
 		}
 		else
 		{
@@ -53,7 +45,21 @@ int main(void)
 	}
 	return (0);
 }
+/**
+ * handle_env - function that handles env
+ * Return:Nothing
+ */
+void handle_env(void)
+{
+	int i = 0;
 
+	while (environ[i] != NULL)
+	{
+		printf("%s\n", environ[i]);
+		i++;
+	}
+	printEnvironment_file5();
+}
 /**
  * executeCommand - function that calls executable files
  * @line:line to be executed
