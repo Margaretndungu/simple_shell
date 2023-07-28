@@ -11,6 +11,7 @@
 
 #define MAX_ARGS 64
 #define READLINE_BUFFER_SIZE 1024
+#define BUFFER_SIZE 1024
 
 extern char **environ;
 
@@ -33,6 +34,8 @@ void executeCommand(char *line);
 char *findExecutablePath(char *command __attribute__((unused)));
 void printCommandNotFoundError(char *command);
 int main(void);
-ssize_t read_chars_from_buffer(const char *buffer, ssize_t
-	buffer_length, char *line, size_t line_index);
+char *read_input_line(void);
+ssize_t read_input_chunk(char *buffer, size_t size);
+char *process_input_data(const char *buffer, ssize_t chars_read, char *line, size_t *line_size);
+
 #endif
