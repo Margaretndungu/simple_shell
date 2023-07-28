@@ -24,6 +24,7 @@ int main(void)
 			free(line);
 			break;
 		}
+
 		if (strcmp(line, "env") == 0)
 		{
 			printEnvironment_file5();

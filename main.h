@@ -12,6 +12,7 @@
 #define MAX_ARGS 64
 #define READLINE_BUFFER_SIZE 1024
 #define BUFFER_SIZE 1024
+#define MAX_TOKENS 100
 
 extern char **environ;
 
@@ -37,5 +38,6 @@ int main(void);
 char *read_input_line(void);
 ssize_t read_input_chunk(char *buffer, size_t size);
 char *process_input_data(const char *buffer, ssize_t chars_read, char *line, size_t *line_size);
+int split_tokens(char *command, char *tokens[]);
 
 #endif
