@@ -40,26 +40,24 @@ int main(void)
 		{
 			executeCommand(line);
 		}
-
 		free(line);
-	}
-	return (0);
+		}
+		return (0);
 }
 /**
- * handle_env - function that handles env
+ * handle_env - function that handle env
  * Return:Nothing
  */
 void handle_env(void)
-{
-	int i = 0;
-
-	while (environ[i] != NULL)
-	{
-		printf("%s\n", environ[i]);
-		i++;
-	}
-	printEnvironment_file5();
-}
+		{
+			int i = 0;
+			while (environ[i] != NULL)
+			{
+				printf("%s\n", environ[i]);
+				i++;
+			}
+			printEnvironment_file5();
+		}
 /**
  * executeCommand - function that calls executable files
  * @line:line to be executed
