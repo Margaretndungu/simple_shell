@@ -78,4 +78,33 @@ void update_pwd_environment_variable(const char *new_dir, const
 		current_directory = getcwd(NULL, 0);
 	}
 }
+/**
+ * handle_cd - function that handles the cd command
+ * @command: pointer to command character
+ * Return:Nothing
+ */
+void handle_cd(char *command)
+{
+	char *arg = extract_directory_argument(command);
 
+	if (arg == NULL)
+	{
+		fprintf(stderr, "Error: Invalid command format.\n");
+		return;
+	}
+
+	if (chdir(arg) != 0)
+	{
+		perror("chdir");
+	}
+}
+/**
+ * handle_pwd - function that handles the pwd command
+ * Return: Nothing
+ */
+void handle_pwd(void)
+{
+	char *current_dir = getcwd(NULL, 0);
+	printf("%s\n", current_dir);
+	free(current_dir);
+}

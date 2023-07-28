@@ -43,4 +43,6 @@ int split_tokens(char *command, char *tokens[]);
 char *extract_directory_argument(char *command);
 void update_pwd_environment_variable(const char *new_dir, const char *previous_dir);
 void change_directory(char *command);
+void handle_cd(char *command);
+void handle_pwd(void);
 #endif

@@ -6,6 +6,7 @@
 int main(void)
 {
 	char *line;
+	int i = 0;
 
 		while (1)
 		{
@@ -24,9 +25,23 @@ int main(void)
 			free(line);
 			break;
 		}
-
-		if (strcmp(line, "env") == 0)
+		else if (strncmp(line, "cd", 2) == 0)
 		{
+			handle_cd(line);
+		}
+		else if (strcmp(line, "pwd") == 0)
+		{
+			handle_pwd();
+		}
+		else if (strcmp(line, "env") == 0)
+		{
+			while (environ[i] != NULL)
+			{
+				
+			printf("%s\n", environ[i]);
+			i++;
+			}
+
 			printEnvironment_file5();
 		}
 		else
