@@ -15,6 +15,7 @@
 #define MAX_TOKENS 100
 
 extern char **environ;
+char *current_directory;
 
 int prompt_user_file1(void);
 char *read_line_file1(void);
@@ -39,5 +40,7 @@ char *read_input_line(void);
 ssize_t read_input_chunk(char *buffer, size_t size);
 char *process_input_data(const char *buffer, ssize_t chars_read, char *line, size_t *line_size);
 int split_tokens(char *command, char *tokens[]);
-
+char *extract_directory_argument(char *command);
+void update_pwd_environment_variable(const char *new_dir, const char *previous_dir);
+void change_directory(char *command);
 #endif
