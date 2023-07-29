@@ -6,8 +6,11 @@
 int main(void)
 {
 	char *line;
+	char *command;
+	const char *delimiter = ";";
+	char *saveptr;
 
-		while (1)
+	while (1)
 		{
 			prompt_user_file1();
 			fflush(stdout);
@@ -18,7 +21,9 @@ int main(void)
 			{
 				break;
 			}
-
+		command = strtok_r(line,delimiter, &saveptr);
+		while (command != NULL)
+		{
 		if (strcmp(line, "exit") == 0)
 		{
 			free(line);
@@ -39,6 +44,8 @@ int main(void)
 		else
 		{
 			executeCommand(line);
+		}
+		command = strtok_r(NULL, delimiter, &saveptr);
 		}
 		free(line);
 		}
