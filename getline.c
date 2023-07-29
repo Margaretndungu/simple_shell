@@ -1,92 +1,61 @@
 #include "main.h"
 /**
- * read_input_line - function that reads user input
+ * custon_getline - function that customizes getline
  * Return: Nothing
  */
-char *read_input_line(void)
+char *custom_getline(void)
 {
+	static char buffer[BUFFER_SIZE];
+	static size_t buffer_index = 0;
+	static ssize_t bytes_read = 0;
+
 	char *line = NULL;
-	size_t line_size = 0;
-	char buffer[BUFFER_SIZE];
-	ssize_t chars_read;
+	size_t line_length = 0;
+	ssize_t i;
+	size_t new_line_length;
+	char *new_line;
 
 	while (1)
 	{
-		chars_read = read_input_chunk(buffer, BUFFER_SIZE);
-
-		if (chars_read <= 0)
+		if ((ssize_t)buffer_index >= bytes_read)
 		{
-			if (line_size == 0)
-				return (NULL);
-		}
-		line = process_input_data(buffer, chars_read, line, &line_size);
-		if (line == NULL)
-		{
-			return (NULL);
-		}
-	}
-	if (prompt_user_file1() == 0)
-		return (NULL);
-
-	execute_command_file1(line);
-
-	return (line);
-}
-/**
- * read_input_chunk - function that read input
- * @buffer: pointer to buffer character
- * @size:size of the buffer
- * Return: Nothing
- */
-ssize_t read_input_chunk(char *buffer, size_t size)
-{
-	static size_t buffer_pos;
-	static ssize_t chars_in_buffer;
-
-	if ((ssize_t)buffer_pos >= chars_in_buffer)
-	{
-		chars_in_buffer = read(STDIN_FILENO, buffer, size);
-
-		buffer_pos = 0;
-	}
-	return (chars_in_buffer);
-}
-/**
- * process_input_data - function that process input
- * @buffer: pointer to a buffer character
- * @chars_read:character to be read
- * @line:pointer to a line character
- * @line_size:function that give line size
- * Return: Nothing
- */
-char *process_input_data(const char *buffer,
-		ssize_t chars_read, char *line, size_t *line_size)
-{
-	ssize_t i;
-	char current_char;
-	char *new_line;
-
-	for (i = 0; i < chars_read; i++)
-	{
-		current_char = buffer[i];
-
-		if (*line_size == 0 || *line_size % BUFFER_SIZE == 0)
-		{
-			new_line = realloc(line, *line_size + BUFFER_SIZE);
-
-			if (new_line == NULL)
+			bytes_read = read(STDIN_FILENO, buffer, BUFFER_SIZE);
+			if (bytes_read <= 0)
 			{
-				free(line);
 				return (NULL);
 			}
-			line =  new_line;
+			buffer_index = 0;
 		}
-		line[(*line_size)++] = current_char;
-		if (current_char == '\n')
+		for(i = buffer_index; i < bytes_read; i++)
 		{
-			line[*line_size - 1] = '\0';
-			return (line);
+			if (buffer[i] == '\n')
+			{
+				line = (char *)malloc((line_length + i - buffer_index + 2) * sizeof(char));
+				if(!line)
+				{
+					perror("malloc");
+					exit(EXIT_FAILURE);
+				}
+				memcpy(line + line_length, buffer + buffer_index, i - buffer_index + 1);
+				line[line_length + i - buffer_index + 1] ='\0';
+
+				buffer_index = i + 1;
+				return (line);
+			}
 		}
+		new_line_length = line_length + bytes_read - buffer_index;
+		new_line = (char *) realloc(line, (new_line_length + 1) * sizeof(char));
+		if (!new_line)
+		{
+			perror("realloc");
+			free(line);
+			exit(EXIT_FAILURE);
+		}
+		line = new_line;
+		memcpy(line + line_length, buffer + buffer_index, bytes_read - buffer_index);
+		line[new_line_length] = '\0';
+
+		line_length = new_line_length;
+		buffer_index = bytes_read;
 	}
-	return (line);
 }

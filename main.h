@@ -8,6 +8,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <errno.h>
+#include <stdbool.h>
 
 #define MAX_ARGS 64
 #define READLINE_BUFFER_SIZE 1024
@@ -36,9 +37,6 @@ void executeCommand(char *line);
 char *findExecutablePath(char *command __attribute__((unused)));
 void printCommandNotFoundError(char *command);
 int main(void);
-char *read_input_line(void);
-ssize_t read_input_chunk(char *buffer, size_t size);
-char *process_input_data(const char *buffer, ssize_t chars_read, char *line, size_t *line_size);
 int split_tokens(char *command, char *tokens[]);
 char *extract_directory_argument(char *command);
 void update_pwd_environment_variable(const char *new_dir, const char *previous_dir);
@@ -48,5 +46,7 @@ void handle_pwd(void);
 void handle_env(void);
 int setenv_builtin(char *variable, char *value);
 int unsetenv_builtin(char *variable);
+int main1(int argc, char *argv[]);
+char *custom_getline(void);
 
 #endif

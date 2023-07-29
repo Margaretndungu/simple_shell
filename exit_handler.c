@@ -103,6 +103,7 @@ void executeCommand_file4(char *command)
 pid_t pid = fork();
 int status;
 int exit_status;
+bool is_exit_cmd;
 
 if (strncmp(command, "exit ", 5) == 0 || (atoi(command) != 0 && command[0] != '0'))
 {
@@ -119,6 +120,8 @@ if (strncmp(command, "exit ", 5) == 0 || (atoi(command) != 0 && command[0] != '0
 
 	exit(exit_status);
 }
+is_exit_cmd = (strncmp(command, "exit", 4) == 0);
+
 if (pid == -1)
 {
 	perror("fork");
@@ -126,7 +129,14 @@ if (pid == -1)
 }
 else if (pid == 0)
 {
+	if (is_exit_cmd)
+	{
+		exit(EXIT_SUCCESS);
+	}
+	else
+	{
 	executeCommandChild(command);
+	}
 }
 else
 {
@@ -134,7 +144,7 @@ else
 	if (WIFEXITED(status))
 	{
 		exit_status = WEXITSTATUS(status);
-		if (exit_status != 0 && exit_status != 127)
+		if (exit_status != 0 && !is_exit_cmd)
 		{
 			exit(exit_status);
 		}
