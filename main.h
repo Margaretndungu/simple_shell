@@ -48,5 +48,5 @@ void handle_pwd(void);
 void handle_env(void);
 int setenv_builtin(char *variable, char *value);
 int unsetenv_builtin(char *variable);
-
+void handle_commands(char *line, const char *delimiter);
 #endif
