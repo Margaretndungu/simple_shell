@@ -33,6 +33,11 @@ char *searchCommandPath_file4(char *command)
 	char *path = getenv("PATH");
 	char *token = strtok(path, ":");
 
+	if (path == NULL)
+	{
+		return(NULL);
+	}
+
 	while (token != NULL)
 	{
 		char command_with_path[MAX_ARGS];
@@ -66,6 +71,7 @@ void executeCommandChild(char *command)
 		token = strtok(NULL, " ");
 	}
 	args[i] = NULL;
+
 	command_path = searchCommandPath_file4(args[0]);
 
 	if (command_path != NULL)
@@ -98,6 +104,21 @@ pid_t pid = fork();
 int status;
 int exit_status;
 
+if (strncmp(command, "exit ", 5) == 0 || (atoi(command) != 0 && command[0] != '0'))
+{
+	if (strncmp(command, "exit ", 5) == 0)
+	{
+	exit_status = atoi(command + 5);
+	}
+	else
+	{
+		exit_status = atoi(command);
+	}
+
+	printf("shell exit status: %d\n", exit_status);
+
+	exit(exit_status);
+}
 if (pid == -1)
 {
 	perror("fork");

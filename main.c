@@ -63,8 +63,8 @@ int main(void)
 	}
 	else
 	{
-		executeCommand(line);
-		handle_commands(line, ";");
+
+	executeCommand(line);
 	}
 	free(line);
 		}
