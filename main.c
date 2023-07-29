@@ -6,9 +6,6 @@
 int main(void)
 {
 	char *line;
-	char *command;
-	const char *delimiter = ";";
-	char *saveptr;
 
 	while (1)
 		{
@@ -21,9 +18,6 @@ int main(void)
 			{
 				break;
 			}
-		command = strtok_r(line,delimiter, &saveptr);
-		while (command != NULL)
-		{
 		if (strcmp(line, "exit") == 0)
 		{
 			free(line);
@@ -45,12 +39,10 @@ int main(void)
 		{
 			executeCommand(line);
 		}
-		command = strtok_r(NULL, delimiter, &saveptr);
-		}
 		free(line);
 		}
 		return (0);
-}
+		}
 /**
  * handle_env - function that handle env
  * Return:Nothing
