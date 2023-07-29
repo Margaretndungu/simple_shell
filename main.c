@@ -31,24 +31,50 @@ int main(void)
 		{
 			handle_pwd();
 		}
-		else if (strcmp(line, "env") == 0)
+		else if (strncmp(line, "setenv", 6) == 0)
+	{
+		char *variable = strtok(line + 6, " ");
+		char *value = strtok(NULL, " ");
+
+		if (variable && value)
 		{
-			handle_env();
+			setenv_builtin(variable, value);
 		}
 		else
 		{
-			executeCommand(line);
+			fprintf(stderr, "Invalid setenv command\n");
 		}
-		free(line);
 		}
-		return (0);
+		else if (strncmp(line, "unsetenv", 8) == 0)
+		{
+		char *variable = strtok(line + 8, " ");
+		if (variable)
+		{
+			unsetenv_builtin(variable);
 		}
+		else
+		{
+			fprintf(stderr, "Invalid unsetenv command\n");
+		}
+	}
+	else if (strcmp(line, "env") == 0)
+	{
+		handle_env();
+	}
+	else
+	{
+		executeCommand(line);
+	}
+	free(line);
+		}
+	return (0);
+}
 /**
- * handle_env - function that handle env
+ * handle_env - function that handles env
  * Return:Nothing
  */
 void handle_env(void)
-		{
+{
 			int i = 0;
 			while (environ[i] != NULL)
 			{
@@ -56,7 +82,7 @@ void handle_env(void)
 				i++;
 			}
 			printEnvironment_file5();
-		}
+}
 /**
  * executeCommand - function that calls executable files
  * @line:line to be executed

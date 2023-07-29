@@ -46,5 +46,7 @@ void change_directory(char *command);
 void handle_cd(char *command);
 void handle_pwd(void);
 void handle_env(void);
+int setenv_builtin(char *variable, char *value);
+int unsetenv_builtin(char *variable);
 
 #endif
