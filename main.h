@@ -7,6 +7,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <ctype.h>
 
 #define MAX_ARGS 64
 #define READLINE_BUFFER_SIZE 1024
@@ -29,14 +30,17 @@ void executeCommand_file4(char *command);
 char *findCommandPath_file5(char *command, char *path);
 void executeCommand_file5(char *line);
 void printEnvironment_file5(void);
-void executeCommand(char *line);
+void executeCommand(char *command);
 char *findExecutablePath(char *command);
-void printCommandNotFoundError(char *command);
+void printCommandNotFoundError(char *command __attribute__((unused)));
 int main(void);
 ssize_t read_chars_from_buffer(const char *buffer, ssize_t
 	buffer_length, char *line, size_t line_index);
 char *my_getline(void);
 char *_strchr(const char *str, int c);
 char *custom_strtok(char *str, const char *del);
+void handleCommand(char *line);
+char *getCurrentWorkingDirectory(void);
+void restoreWorkingDirectory(char *saved_directory);
 
 #endif

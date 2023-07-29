@@ -18,7 +18,6 @@ int main(void)
 		{
 			break;
 		}
-
 		if (strcmp(line, "exit") == 0)
 		{
 			free(line);
@@ -38,47 +37,74 @@ int main(void)
 	return (0);
 }
 /**
+ * handleCommand - function to execute multiple commands
+ * @line: line to be executed
+ *
+ * Return: Nothing
+ */
+void handleCommand(char *line)
+{
+	char *command;
+	char *saved_directory;
+	char *line_copy = strdup(line);
+
+	command = strtok(line_copy, ";");
+
+	while (command != NULL)
+	{
+		saved_directory = getCurrentWorkingDirectory();
+
+		executeCommand(command);
+
+		restoreWorkingDirectory(saved_directory);
+
+		command = strtok(NULL, ";");
+	}
+	free(line_copy);
+}
+/**
  * executeCommand - function that calls executable files
  * @line:line to be executed
  * Return: 0 on success and -1 on failure
  */
-void executeCommand(char *line)
+void executeCommand(char *command)
 {
 	char *command_path;
 	int status;
 	pid_t pid;
 	char *args[MAX_ARGS];
 
-		pid = fork();
+	pid = fork();
 
-		if (pid == -1)
-		{
-			perror("fork");
-			return;
-		}
-		else if (pid == 0)
-		{
-			tokenizeInput_file3(line, args);
-			command_path = findCommand_file3(args);
+	if (pid == -1)
+	{
+		perror("fork");
+		return;
+	}
+	else if (pid == 0)
+	{
+		tokenizeInput_file3(command, args);
+		command_path = findCommand_file3(args);
 
-			if (command_path != NULL)
-			{
-				execve(command_path, args, NULL);
-				perror("execve");
-				free(command_path);
-			}
-			else
-			{
-				printCommandNotFoundError(args[0]);
-			}
-			free(line);
-			exit(EXIT_FAILURE);
+		if (command_path != NULL)
+		{
+			execve(command_path, args, NULL);
+			perror("execve");
+			free(command_path);
 		}
 		else
 		{
-			waitpid(pid, &status, 0);
+			printCommandNotFoundError(args[0]);
 		}
+		free(command);
+		exit(EXIT_FAILURE);
+	}
+	else
+	{
+		waitpid(pid, &status, 0);
+	}
 }
+
 /**
  * findExecutablePath - function that find executable path
  * @command: command to be found
@@ -86,7 +112,6 @@ void executeCommand(char *line)
  */
 char *findExecutablePath(char *command __attribute__((unused)))
 {
-
 	return (NULL);
 }
 /**
