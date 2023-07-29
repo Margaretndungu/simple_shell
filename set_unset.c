@@ -8,10 +8,21 @@
 int setenv_builtin(char *variable, char *value)
 {
 	int result = setenv(variable, value, 1);
+	char *command;
 
 	if (result != 0)
 	{
 		fprintf(stderr, "Error setting environment variable.\n");
+	}
+	else
+	{
+		prompt_user_file1();
+		command = read_line_file1();
+		if (command)
+		{
+			execute_command_file1(command);
+			free(command);
+		}
 	}
 	return (result);
 }
@@ -23,10 +34,21 @@ int setenv_builtin(char *variable, char *value)
 int unsetenv_builtin(char *variable)
 {
 	int result = unsetenv(variable);
+	char *command;
 
 	if (result != 0)
 	{
 		fprintf(stderr, "Error unsetting environment variable.\n");
+	}
+	else
+	{
+	prompt_user_file1();
+	command = read_line_file1();
+	if (command)
+	{
+		execute_command_file1(command);
+		free(command);
+	}
 	}
 	return (result);
 }
