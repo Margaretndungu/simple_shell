@@ -6,7 +6,6 @@
 int main(void)
 {
 	char *line;
-	const char *delimiter = ";";
 
 	while (1)
 		{
@@ -65,7 +64,7 @@ int main(void)
 	else
 	{
 		executeCommand(line);
-		handle_commands(line, delimiter);
+		handle_commands(line, ";");
 	}
 	free(line);
 		}

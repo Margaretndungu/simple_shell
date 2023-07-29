@@ -25,14 +25,19 @@ char *read_line_file1(void)
 {
 	char *line = NULL;
 	size_t bufsize = 0;
-	ssize_t read = getline(&line, &bufsize, stdin);
+	ssize_t read;
 
+	do {
+		read = getline(&line, &bufsize, stdin);
 	if (read == -1)
 	{
 		if (line)
 			free(line);
 		return (NULL);
 	}
+	}
+	while (line[0] == '#' || line[0] == '\n');
+
 	line[strcspn(line, "\n")] = '\0';
 	return (line);
 }
